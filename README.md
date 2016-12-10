@@ -1,5 +1,5 @@
 #What Is It?
-This is a script for bundling small Rust projects into a single file, to upload to CodinGame by resolving empty mod declarations
+This is a script for bundling small Rust projects into a single file, to upload to CodinGame, by resolving empty mod declarations
 
 #How Do I Use It?
 Usage is simple. Assuming you've got python3 installed correctly, for basic usage you can just run the script (located at src/bundler.py in this repo), supplying a path to the source file containing your main method, a path to the file you want the bundled code to be saved into, and prefix for identifying include-guards as command line arguments.

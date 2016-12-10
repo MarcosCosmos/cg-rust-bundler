@@ -5,7 +5,7 @@ import re
 
 DEFAULT_INPUT_FILEPATH = 'main.rs'
 ###launch the argument parser for a proper cli experience
-parser = argparse.ArgumentParser(description='A script for bundling small Rust projects into a single file, to upload to CodinGame by resolving empty mod declarations')
+parser = argparse.ArgumentParser(description='A script for bundling small Rust projects into a single file, to upload to CodinGame, by resolving empty mod declarations')
 parser.add_argument(
     '-i',
     '--input',
