@@ -23,7 +23,7 @@ If you omit the output, it will attempt to look for a `main.rs` file in the curr
 #What Isn't It?
 This script is NOT a complete Rust parser, as such, there are some caveats:
 - It doesn't (yet) support detecting conditional compilation flags to omit codeblocks when 'features' are not specified (This is a planned feature)
-- It doesn't (yet) support reading the project's `cargo.toml` to resolve crates you've written yourself. (This is a planned feature, but ONLY for crates with code stored locally on your computer)
+- It doesn't (yet) support reading the project's `Cargo.toml` to resolve crates you've written yourself. (This is a planned feature, but ONLY for crates with code stored locally on your computer)
 - It only detects mod declarations that have ';' on the same line. For example, it detects `mod my_mod;` but not:
 ```
 mod my_mod
