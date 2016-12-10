@@ -45,7 +45,7 @@ It is not intended to be a complete list. For a more concrete idea of future pla
 - Local crate detection, so that you can crate up and re-use common code snippets or DIY-libraries you use across multiple puzzles/games
 - Conditional-compilation emulation (e.g. `#[cgf()]`/`--features`)
 - More options, such as enabling/disabling crate detection
-- Code minificiation (with varying levels of intensity)
+- Code minification (with varying levels of intensity)
 - Optionally performing some preprocessing to improve code performance for games that require complex AI (and hopefully in doing so, bring rust's performance on CG closer to C++, as it should be)
 - (Maybe) multi-line parsing to detect empty mod declarations that are language-compliant but currently missed by the script.
 - (Maybe) Converting the script from Python3 into Rust, to integrate better with Rust's existing build-script tooling.
