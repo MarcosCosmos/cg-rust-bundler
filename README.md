@@ -31,7 +31,7 @@ mod my_mod
 ```
 
 #What Does It Actually Do, Though?
-- Currently, it processes an input file, line my line, and looks for `mod <mod_name>;`/`pub mod <mod_name>;' declarations, then searches for the associated file in the same way that cargo/rustc does (either `<mod_name>.rs` or `<mod_name>/mod.rs`, searched in that order)
+- Currently, it processes an input file, line my line, and looks for `mod <mod_name>;`/`pub mod <mod_name>;` declarations, then searches for the associated file in the same way that cargo/rustc does (either `<mod_name>.rs` or `<mod_name>/mod.rs`, searched in that order)
 - When it finds a mod file, it recursively processes that file (and any mod declarations), then combines the contests of all discovered files into a single, bundled output.
 - Tracks and preserves indentation, and auto-indents sub-mod contents for readability 
 
