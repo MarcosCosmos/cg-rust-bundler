@@ -3,7 +3,8 @@ import argparse
 import os.path
 import re
 
-DEFAULT_INPUT_FILEPATH = 'main.rs'
+DEFAULT_INPUT_FILEPATH = 'src/main.rs'
+DEFAULT_OUTPUT_FILEPATH = 'bundled.rs'
 ###launch the argument parser for a proper cli experience
 parser = argparse.ArgumentParser(description='A script for bundling small Rust projects into a single file, to upload to CodinGame, by resolving empty mod declarations')
 parser.add_argument(
@@ -16,31 +17,40 @@ parser.add_argument(
     '--output',
     help='A path to the file to save the bundled code to. The bundler will print the code to standard output if this is omitted'
 )
+parser.add_argument(
+    '-lc',
+    '--localcrate',
+    action='append',
+    help='a repeatable arguement that creates list of key value pairs for local crates to pull (i.e. packages you wrote to use in multiple contests in cg. E.g. -lc my_pack=~/my_crate - ;c my_other=~/other'
+)
+
 
 arguments = parser.parse_args()
 inputFilePath = arguments.input or DEFAULT_INPUT_FILEPATH
-outputFilePath = arguments.output
+outputFilePath = arguments.output or DEFAULT_OUTPUT_FILEPATH
 
+localCratePaths = {name: path for name, path in map(lambda each: each.split("="), arguments.localcrate)}
 INDENT_STRING = '    '
+
+knownCrates = {}
 
 #this is just a stub for now, needs TOML support to do properly, also the extern may not actually be mandatory in rust, need to check
 def processLocalCrateUse(line, curIndent = ''):
-    localCratePaths = {'phys2d': '/mnt/shared-drive/archy/git/coding-game/common/phys2d', 'cg_generic_traits': '/mnt/shared-drive/archy/git/coding-game/common/cg_generic_traits'}
-    crateUse = re.search('^(\s*)?extern crate \w+;', line);
+    crateUse = re.search('^(\s*)?extern crate \w+;', line)
     result = ''
     if crateUse is not None:
         cwd = os.getcwd()
         modName = crateUse.group(0).split('extern crate ')[1].split(';')[0]
-    
+
         cratePath = localCratePaths[modName]
         os.chdir('%s/src' % cratePath)
         with open('./lib.rs', 'r') as libFile:
             # for line in libFile.readlines():
             #     print(line)
             modContents = scan(libFile, curIndent+'\t')
-    
+
         result += "%s%s mod %s {\n%s\n%s}" % (curIndent, 'pub', modName, modContents, curIndent)
-    
+
         os.chdir(cwd)
         return result
     else:
