@@ -28,8 +28,10 @@ parser.add_argument(
 arguments = parser.parse_args()
 inputFilePath = arguments.input or DEFAULT_INPUT_FILEPATH
 outputFilePath = arguments.output or DEFAULT_OUTPUT_FILEPATH
-
-localCratePaths = {name: path for name, path in map(lambda each: each.split("="), arguments.localcrate)}
+if arguments.localcrate:
+    localCratePaths = {name: path for name, path in map(lambda each: each.split("="), arguments.localcrate)}
+else:
+    localCratePaths = {}
 INDENT_STRING = '    '
 
 knownCrates = {}
@@ -42,19 +44,19 @@ def processLocalCrateUse(line, curIndent = ''):
         cwd = os.getcwd()
         modName = crateUse.group(0).split('extern crate ')[1].split(';')[0]
 
-        cratePath = localCratePaths[modName]
-        os.chdir('%s/src' % cratePath)
-        with open('./lib.rs', 'r') as libFile:
-            # for line in libFile.readlines():
-            #     print(line)
-            modContents = scan(libFile, curIndent+'\t')
+        cratePath = localCratePaths[modName] if modName in localCratePaths else None
+        if cratePath:
+            os.chdir('%s/src' % cratePath)
+            with open('./lib.rs', 'r') as libFile:
+                # for line in libFile.readlines():
+                #     print(line)
+                modContents = scan(libFile, curIndent+'\t')
 
-        result += "%s%s mod %s {\n%s\n%s}" % (curIndent, 'pub', modName, modContents, curIndent)
+            result += "%s%s mod %s {\n%s\n%s}" % (curIndent, 'pub', modName, modContents, curIndent)
 
-        os.chdir(cwd)
-        return result
-    else:
-        return None
+            os.chdir(cwd)
+            return result
+    return None
 
 def processMod(line, curIndent = ''):
     mod = re.search('^(\s*)?(pub )?mod \w+;', line)
