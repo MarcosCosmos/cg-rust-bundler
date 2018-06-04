@@ -1,5 +1,6 @@
 # Related Projects
 - https://github.com/MarcosCosmos/cg-cpp-bundler A bundler for C++
+- https://github.com/MonZta123/CGSharpJoin A bundler for C#
 - https://github.com/slava-sh/rust-bundler Another rust bundler written in rust using syntax trees (supports pretty printing & private crates)
 - https://github.com/lpenz/rust-sourcebundler Another rust bundler written in rust using regexes
 
